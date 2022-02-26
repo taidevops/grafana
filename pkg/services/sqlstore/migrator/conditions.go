@@ -5,7 +5,7 @@ type MigrationCondition interface {
 	IsFulfilled(results []map[string][]byte) bool
 }
 
-type ExistsMigrationCondition struct {}
+type ExistsMigrationCondition struct{}
 
 func (c *ExistsMigrationCondition) IsFulfilled(results []map[string][]byte) bool {
 	return len(results) >= 1
@@ -24,5 +24,25 @@ type IfIndexExistsCondition struct {
 }
 
 func (c *IfIndexExistsCondition) SQL(dialect Dialect) (string, []interface{}) {
-	return dialect.
+	return dialect.IndexCheckSQL(c.TableName, c.IndexName)
+}
+
+type IfIndexNotExistsCondition struct {
+	NotExistsMigrationCondition
+	TableName string
+	IndexName string
+}
+
+func (c *IfIndexNotExistsCondition) SQL(dialect Dialect) (string, []interface{}) {
+	return dialect.IndexCheckSQL(c.TableName, c.IndexName)
+}
+
+type IfColumnNotExistsCondition struct {
+	NotExistsMigrationCondition
+	TableName  string
+	ColumnName string
+}
+
+func (c *IfColumnNotExistsCondition) SQL(dialect Dialect) (string, []interface{}) {
+	return dialect.ColumnCheckSQL(c.TableName, c.ColumnName)
 }

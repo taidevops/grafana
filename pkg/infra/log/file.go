@@ -1,11 +1,11 @@
 
 package log
 
-import (
-	"bytes"
-	"errors"
-)
+// import (
+// 	"bytes"
+// 	"errors"
+// )
 
-type FileLogWriter struct {
-	Format
-}
+// type FileLogWriter struct {
+// 	Format
+// }

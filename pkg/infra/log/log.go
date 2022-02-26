@@ -1,23 +1,25 @@
 package log
 
 import (
-	"fmt"
-	"io"
-	"os"
-
 	gokitlog "github.com/go-kit/log"
-	"github.com/mattn/go-isatty"
 )
 
-func FormatedLogger func(w io.Writer) gokitlog.Logger
+var (
+	loggersToReload []ReloadableHandler
+)
 
-func getLogFormat(format string) FormatedLogger {
-	switch format {
-	case "console":
-		if isatty.IsTerminal(os.Stdout.Fd()) {
-			return func(w io.Writer) gokitlog.Logger {
-				return
-			}
+type ConcreteLogger struct {
+	ctx []interface{}
+	gokitlog.SwapLogger
+}
+
+// Reload reloads all loggers.
+func Reload() error {
+	for _, logger := range loggersToReload {
+		if err := logger.Reload(); err != nil {
+			return err
 		}
 	}
+
+	return nil
 }

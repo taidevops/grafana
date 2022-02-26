@@ -14,7 +14,7 @@ var sessionLogger = log.New("sqlstore.session")
 type DBSession struct {
 	*xorm.Session
 	transactionOpen bool
-	events []interface{}
+	events          []interface{}
 }
 
 type DBTransactionFunc func(sess *DBSession) error
@@ -58,4 +58,12 @@ func startSessionOrUseExisting(ctx context.Context, engine *xorm.Engine, beginTr
 
 	newSess.Session = newSess.Session.Context(ctx)
 	return newSess, true, nil
+}
+
+func getTypeName(bean interface{}) (res string) {
+	t := reflect.TypeOf(bean)
+	for t.Kind() == reflect.Ptr {
+		t = t.Elem()
+	}
+	return t.Name()
 }

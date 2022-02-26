@@ -4,6 +4,24 @@ import (
 	"gopkg.in/ini.v1"
 )
 
+type Scheme string
+
+const (
+	HTTPScheme   Scheme = "http"
+	HTTPSScheme  Scheme = "https"
+	HTTP2Scheme  Scheme = "h2"
+	SocketScheme Scheme = "socket"
+)
+
+var (
+	// build
+	BuildVersion string
+	BuildCommit  string
+	BuildBranch  string
+	BuildStamp   int64
+
+)
+
 // TODO move all global vars to this struct
 type Cfg struct {
 	Raw    *ini.File

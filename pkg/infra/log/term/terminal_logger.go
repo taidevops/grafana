@@ -26,3 +26,7 @@ type terminalLogger struct {
 	w io.Writer
 }
 
+func NewTerminalLogger(w io.Writer) gokitlog.Logger {
+	return &terminalLogger{w}
+}
+
