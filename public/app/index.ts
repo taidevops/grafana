@@ -1,1 +1,3 @@
-declare let __webpack_nonce__: string;
+
+import app from './app';
+app.init();

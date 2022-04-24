@@ -19,19 +19,18 @@ var (
 	BuildCommit  string
 	BuildBranch  string
 	BuildStamp   int64
-
 )
 
 // TODO move all global vars to this struct
 type Cfg struct {
-	Raw    *ini.File
-	Logger log.Logger
+	Raw *ini.File
 
 	// HTTP Server Settings
-	CertFile         string
-	KeyFile          string
-	HTTPAddr         string
-	HTTPPort         string
-	AppURL           string
-	AppSubURL        string
+	CertFile  string
+	KeyFile   string
+	HTTPAddr  string
+	HTTPPort  string
+	AppURL    string
+	AppSubURL string
+	Protocol  Scheme
 }
