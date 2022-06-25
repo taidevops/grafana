@@ -44,3 +44,17 @@ func ContainsTag(existingTags []*Tag, tag *Tag) bool {
 	}
 	return false
 }
+
+func JoinTagPairs(tags []*Tag) []string {
+	tagPairs := []string{}
+
+	for _, tag := range tags {
+		if tag.Value != "" {
+			tagPairs = append(tagPairs, tag.Key+":"+tag.Value)
+		} else {
+			tagPairs = append(tagPairs, tag.Key)
+		}
+	}
+
+	return tagPairs
+}

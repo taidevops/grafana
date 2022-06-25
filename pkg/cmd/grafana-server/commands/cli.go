@@ -6,11 +6,12 @@ import (
 	"fmt"
 	"os"
 	"os/signal"
+	"strconv"
 	"syscall"
 	"time"
 
-	"github.com/grafana/grafana/pkg/infra/log"
-	"github.com/grafana/grafana/pkg/setting"
+	"cowk8s.io/grafana/grafana/pkg/setting"
+	"cowk8s.io/grafana/pkg/infra/log"
 )
 
 type ServerOptions struct {
@@ -35,8 +36,8 @@ func RunServer(opt ServerOptions) int {
 	var (
 		//homePath   = serverFs.String("homepath", "", "path to grafana install/home path, defaults to working directory")
 
-		v           = serverFs.Bool("v", false, "prints current version and exits")
-		vv          = serverFs.Bool("vv", false, "prints current version, all dependencies and exits")
+		v  = serverFs.Bool("v", false, "prints current version and exits")
+		vv = serverFs.Bool("vv", false, "prints current version, all dependencies and exits")
 	)
 
 	if err := serverFs.Parse(os.Args[1:]); err != nil {
@@ -72,9 +73,7 @@ func executeServer(opt ServerOptions) error {
 	setting.BuildStamp = buildstampInt64
 	setting.BuildBranch = opt.BuildBranch
 
-
 }
-
 
 func listenToSystemSignals(ctx context.Context) {
 	signalChan := make(chan os.Signal, 1)

@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/grafana/grafana/pkg/cmd/grafana-server/commands"
+	"cowk8s.io/grafana/pkg/cmd/grafana-server/commands"
 )
 
 // The following variables cannot be constants, since they can be overridden through the -X link flag

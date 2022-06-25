@@ -6,15 +6,20 @@ import (
 	"net/http"
 	"time"
 
-	"github.com/grafana/grafana/pkg/setting"
-	"github.com/grafana/grafana/pkg/web"
+	"github.com/taidevops/grafana/pkg/api/routing"
+	"github.com/taidevops/grafana/pkg/infra/log"
+	"github.com/taidevops/grafana/pkg/setting"
+	"github.com/taidevops/grafana/pkg/web"
 )
 
 type HTTPServer struct {
+	log         log.Logger
 	web         *web.Mux
 	context     context.Context
 	httpSrv     *http.Server
-	middlewares web.Handler
+	middlewares []web.Handler
+
+	RouteRegister routing.RouteRegister
 
 	Cfg *setting.Cfg
 }
