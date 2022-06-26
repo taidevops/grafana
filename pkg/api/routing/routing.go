@@ -1,5 +1,5 @@
 package routing
 
 var (
-	ServerError = func(err error) response
+	ServerError = func(err error) response.Res
 )

@@ -13,6 +13,23 @@ const (
 	SocketScheme Scheme = "socket"
 )
 
+const (
+	RedactedPassword = "*********"
+	DefaultHTTPAddr  = "0.0.0.0"
+	Dev              = "development"
+	Prod             = "production"
+	Test             = "test"
+	ApplicationName  = "Grafana"
+)
+
+// zoneInfo names environment variable for setting the path to look for the timezone database in go
+const zoneInfo = "ZONEINFO"
+
+var (
+	// App settings.
+	Env = Dev
+)
+
 var (
 	// build
 	BuildVersion string
