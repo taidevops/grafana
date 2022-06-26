@@ -32,3 +32,9 @@ type UpdateTeamCommand struct {
 	OrgId int64 `json:"-"`
 }
 
+
+
+type IsAdminOfTeamsQuery struct {
+	SignedInUser *SignedInUser
+	Result       bool
+}

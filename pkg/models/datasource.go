@@ -2,6 +2,7 @@ package models
 
 import (
 	"errors"
+	"time"
 
 	"github.com/taidevops/grafana/pkg/components/simplejson"
 )
@@ -36,8 +37,17 @@ type DataSource struct {
 	Database      string `json:"database"`
 	BasicAuth     bool   `json:"basicAuth"`
 	BasicAuthUser string `json:"basicAuthUser"`
+	// swagger:ignore
+	BasicAuthPassword string            `json:"-"`
+	WithCredentials   bool              `json:"withCredentials"`
+	IsDefault         bool              `json:"isDefault"`
+	JsonData          *simplejson.Json  `json:"jsonData"`
+	SecureJsonData    map[string][]byte `json:"secureJsonData"`
+	ReadOnly          bool              `json:"readOnly"`
+	Uid               string            `json:"uid"`
 
-	JsonData *simplejson.Json `json:"jsonData"`
+	Created time.Time `json:"created"`
+	Updated time.Time `json:"updated"`
 }
 
 // AllowedCookies parses the jsondata.keepCookies and returns a list of
@@ -52,20 +62,47 @@ func (ds DataSource) AllowedCookies() []string {
 	return []string{}
 }
 
-type AddDataSourceComamnd struct {
-	Name string `json:"name" binding:"Required"`
-	Type string `json:"type" binding:"Required"`
+// ----------------------
+// COMMANDS
+
+// Also acts as api DTO
+type AddDataSourceCommand struct {
+	Name            string            `json:"name" binding:"Required"`
+	Type            string            `json:"type" binding:"Required"`
+	Access          DsAccess          `json:"access" binding:"Required"`
+	Url             string            `json:"url"`
+	Database        string            `json:"database"`
+	User            string            `json:"user"`
+	BasicAuth       bool              `json:"basicAuth"`
+	BasicAuthUser   string            `json:"basicAuthUser"`
+	WithCredentials bool              `json:"withCredentials"`
+	IsDefault       bool              `json:"isDefault"`
+	JsonData        *simplejson.Json  `json:"jsonData"`
+	SecureJsonData  map[string]string `json:"secureJsonData"`
+	Uid             string            `json:"uid"`
+
+	OrgId                   int64             `json:"-"`
+	UserId                  int64             `json:"-"`
+	ReadOnly                bool              `json:"-"`
+	EncryptedSecureJsonData map[string][]byte `json:"-"`
+	UpdateSecretFn          UpdateSecretFn    `json:"-"`
+
+	Result *DataSource `json:"-"`
 }
 
 type UpdateDataSourceCommand struct {
 	Name string `json:"name" binding:"Required"`
 }
 
+// Function for updating secrets along with datasources, to ensure atomicity
+type UpdateSecretFn func() error
+
 // -----------
 // QUERIES
 
 type GetDataSourcesQuery struct {
-	OrgId int64
+	OrgId           int64
 	DataSourceLimit int
-	User *
+	User            *SignedInUser
+	Result          []*DataSource
 }

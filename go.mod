@@ -13,6 +13,8 @@ require (
 	github.com/prometheus/common v0.32.1 // indirect
 	github.com/prometheus/procfs v0.7.3 // indirect
 	go.opentelemetry.io/otel v1.7.0 // indirect
+	golang.org/x/net v0.0.0-20220127200216-cd36cc0744dd // indirect
+	google.golang.org/appengine v1.6.6 // indirect
 	google.golang.org/protobuf v1.27.1 // indirect
 )
 
@@ -23,6 +25,7 @@ require (
 	github.com/mattn/go-isatty v0.0.14 // indirect
 	github.com/prometheus/client_golang v1.12.2
 	go.opentelemetry.io/otel/trace v1.7.0
+	golang.org/x/oauth2 v0.0.0-20220622183110-fd043fe589d2
 	golang.org/x/sys v0.0.0-20220114195835-da31bd327af9 // indirect
 	gopkg.in/ini.v1 v1.66.6
 )
